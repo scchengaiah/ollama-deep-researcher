@@ -12,6 +12,8 @@ from assistant.utils import deduplicate_and_format_sources, tavily_search, forma
 from assistant.state import SummaryState, SummaryStateInput, SummaryStateOutput
 from assistant.prompts import query_writer_instructions, summarizer_instructions, reflection_instructions
 
+OLLAMA_API_URL = "<OLLAMA_API_URL>"
+
 # Nodes   
 def generate_query(state: SummaryState, config: RunnableConfig):
     """ Generate a query for web search """
@@ -21,7 +23,7 @@ def generate_query(state: SummaryState, config: RunnableConfig):
 
     # Generate a query
     configurable = Configuration.from_runnable_config(config)
-    llm_json_mode = ChatOllama(model=configurable.local_llm, temperature=0, format="json")
+    llm_json_mode = ChatOllama(base_url= OLLAMA_API_URL, model=configurable.local_llm, temperature=0, format="json", client_kwargs={"verify": False})
     result = llm_json_mode.invoke(
         [SystemMessage(content=query_writer_instructions_formatted),
         HumanMessage(content=f"Generate a query for web search:")]
@@ -64,7 +66,7 @@ def summarize_sources(state: SummaryState, config: RunnableConfig):
 
     # Run the LLM
     configurable = Configuration.from_runnable_config(config)
-    llm = ChatOllama(model=configurable.local_llm, temperature=0)
+    llm = ChatOllama(base_url= OLLAMA_API_URL, model=configurable.local_llm, temperature=0, client_kwargs={"verify": False})
     result = llm.invoke(
         [SystemMessage(content=summarizer_instructions),
         HumanMessage(content=human_message_content)]
@@ -86,7 +88,7 @@ def reflect_on_summary(state: SummaryState, config: RunnableConfig):
 
     # Generate a query
     configurable = Configuration.from_runnable_config(config)
-    llm_json_mode = ChatOllama(model=configurable.local_llm, temperature=0, format="json")
+    llm_json_mode = ChatOllama(base_url= OLLAMA_API_URL, model=configurable.local_llm, temperature=0, format="json", client_kwargs={"verify": False})
     result = llm_json_mode.invoke(
         [SystemMessage(content=reflection_instructions.format(research_topic=state.research_topic)),
         HumanMessage(content=f"Identify a knowledge gap and generate a follow-up web search query based on our existing knowledge: {state.running_summary}")]

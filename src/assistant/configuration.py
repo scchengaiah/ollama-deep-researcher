@@ -10,7 +10,7 @@ from dataclasses import dataclass
 class Configuration:
     """The configurable fields for the research assistant."""
     max_web_research_loops: int = 3
-    local_llm: str = "llama3.2"
+    local_llm: str = "deepseek-r1:14b"
 
     @classmethod
     def from_runnable_config(

@@ -1,0 +1,71 @@
+### Virtual Environments
+venv/
+env/
+
+### Cache Directories
+$HOME/.cache/pip
+downloads/
+dist/
+
+### Build Artifacts
+*.egg-info/
+build/
+*.tar.gz
+*.whl
+MANIFEST.in
+
+### IDE Specific Files
+.idea/
+*.pyc
+*.swp
+*.swo
+.vscode/
+*.orig
+
+### Environment Files
+*.env
+*.env.local
+*.env.development
+*.env.test
+
+### Dependency Directories
+node_modules/
+vendor/
+
+### Log Files
+logs/
+
+### Temporary and Backup Files
+.*~.tmp
+*~
+.DS_Store
+*.bk
+*.old
+*.tmp
+*.temp
+
+### Testing
+htmlcov/
+.pytest_cache/
+
+### Docker
+.docker/
+Dockerfile*
+docker-compose.*
+.Dockerignore
+.env.docker
+.env.local
+.env.development
+
+### CI/CD
+.circleci/
+.travis.yml
+appveyor
+codeship
+shipit
+ semaphore
+
+### Miscellaneous
+.env~
+
+.langgraph_api
